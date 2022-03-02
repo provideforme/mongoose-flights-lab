@@ -1,11 +1,4 @@
-<!-- 4. Implement the following User Stories:
-    - AAU, I want to view a list of all flights (index view) that displays each flight’s airline, airport, flight no., and departure date/time.
-    - AAU, I want to create flights by entering the information on a page (new view) that has a form and submitting it. When I submit the form I should be taken back to all the flights.
+<!-- 
     - AAU, I want to be able to access each view via a navigation bar at the top of the page with links to:
         - `ALL FLIGHTS`, and
         - `ADD FLIGHT`
-
-## Hints:
-
-- Checkout the `[<input type="datetime-local">](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime-local)` to assist users in entering valid date/time values.
-- In the form for adding a new Flight, use a `<select name="airport">` to assign the flight’s `airport`. Since they don’t change, it’s okay to hard-code the `<option>` elements, e.g., `<option value="DEN" selected>`. -->
