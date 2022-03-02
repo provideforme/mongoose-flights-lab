@@ -14,6 +14,7 @@ function create(req, res) {
   })
 }
 
+
 function index(req, res) {
   console.log('hi');
   Flight.find({}, function (error, flights) {
@@ -21,6 +22,15 @@ function index(req, res) {
       error,
       flights,
       title: "All Flights"
+    })
+  })
+}
+
+function show(req, res) {
+  Flight.findById(req.params.id, function (err, flight) {
+    res.render('flights/show', { 
+      title: 'Flight Information', 
+      flight: flight,
     })
   })
 }
@@ -37,8 +47,9 @@ function edit(req, res) {
 
 export{
   newFlight as new,
-  index,
   create,
+  index,
+  show,
   deleteFlight as delete,
   edit
 }

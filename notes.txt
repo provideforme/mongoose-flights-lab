@@ -1,4 +1,36 @@
-<!-- 
-    - AAU, I want to be able to access each view via a navigation bar at the top of the page with links to:
-        - `ALL FLIGHTS`, and
-        - `ADD FLIGHT`
+The goal of this lab is to add the ability to specify a list (array) of `tickets` for the flight.
+
+Styling is secondary, spend time on it only after you have implemented all the required functionality.
+
+# Exercises
+
+1. Create a `ticketSchema` that will provide the structure for *ticket* subdocuments that will be embedded:
+    
+    [The ticketSchema](https://www.notion.so/7f889d81f1424b948aced43ebff1adcf)
+    
+2. Add the following additional property to the `Flight` Model:
+    
+    [Additions to the Flight Model](https://www.notion.so/05ce409b4d4c4962b20e85cb13f6eecf)
+    
+3. Implement the following User Story:
+*AAU, when viewing the list of flights, I want to click on a “detail” link displayed next to each flight to view all of the properties for that flight (`show` view). This show page should include each of its tickets.*
+4. Implement the following User Story:
+*AAU, when viewing the details page (`show` view) for a flight, I want to be able to add a ticket for that flight.* Each ticket, as defined by the schema above, includes a `seat` and a `price`.
+5. Implement the following User Story:
+*AAU, when viewing the details page (`show` view) for a flight, I want to see a list of that flight’s `tickets` (`seat` & `price`)*
+
+## Hints
+
+Define the `seat` property as follows: `seat: {type: String, match: /[A-F][1-9]\d?/}` - that’s what we call a [regular expression](https://en.wikipedia.org/wiki/Regular_expression) that’s being assigned to the `match` validator. Now for the best part, which just might blow your mind! You ready? Here it is… HTML `<input>` tags have a `pattern` attribute that accept a regex pattern; and if what’s typed in the `<input>` doesn’t match the pattern, the form can’t be submitted! Here’s what your `<input>` should look like for entering the seat:
+
+```
+<input name="seat" required pattern="[A-F][1-9]\d?">
+```
+
+That regex pattern will match the following characters:
+
+- An `A` thru `F` character, followed by
+- a `1` thru `9` character, followed by
+- zero or one `0` thru `9` character.
+
+We’ll cover more about regular expressions soon enough, but this opportunity to preview them was too hard to pass up! Combined with the HTML `pattern` attribute, they provide an excellent way to perform *client-side* validation of inputs.
