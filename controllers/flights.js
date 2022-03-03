@@ -1,4 +1,5 @@
 import { Flight } from "../models/flight.js"
+import { Meal } from '../models/meal.js'
 
 function newFlight(req, res) {
   res.render('flights/new', {
@@ -9,8 +10,8 @@ function newFlight(req, res) {
 function create(req, res) {
   const flight = new Flight(req.body)
   flight.save(function(err){
-    if (err) return res.render('flights/new')
-    res.redirect('/flights')
+    if (err) return res.redirect('/flights/new')
+    res.redirect(`/flights/${flight._id}`)
   })
 }
 
@@ -27,10 +28,15 @@ function index(req, res) {
 }
 
 function show(req, res) {
-  Flight.findById(req.params.id, function (err, flight) {
-    res.render('flights/show', { 
-      title: 'Flight Information', 
-      flight: flight,
+  Flight.findById(req.params.id)
+  .populate('meals')
+  .exec(function(err, flight) {
+    Meal.find({_id: {$nin: flight.meal}}, function(err, meals){
+      res.render('flights/show', { 
+        title: 'Flight Information', 
+        flight: flight,
+        meals: meals,
+      })
     })
   })
 }
@@ -42,7 +48,38 @@ function deleteFlight(req, res) {
 }
 
 function edit(req, res) {
-  console.log("gonna update")
+  Flight.findById(req.params.id, function(err, flight) {
+    res.render('flights/edit', {
+      flight,
+      err,
+      title: "Edit Flight"
+    })
+  })
+}
+
+function update(req, res) {
+  Flight.findByIdAndUpdate(req.params.id, req.body, function(err, flight) {
+    res.redirect(`/flights/${flight._id}`)
+  })
+}
+
+
+function createTicket(req, res) {
+  Flight.findById(req.params.id, function(err, flight) {
+    flight.tickets.push(req.body)
+    flight.save(function(err) {
+      res.redirect(`/flights/${flight._id}`)
+    })
+  })
+}
+
+function addMeal(req, res) {
+  Flight.findById(req.params.id, function(err, flight) {
+    flight.meals.push(req.body.mealId)
+    flight.save(function(err) {
+      res.redirect(`/flights/${flight._id}`)
+    })
+  })
 }
 
 export{
@@ -51,5 +88,8 @@ export{
   index,
   show,
   deleteFlight as delete,
-  edit
+  edit,
+  update,
+  createTicket,
+  addMeal
 }

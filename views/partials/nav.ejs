@@ -3,6 +3,12 @@
   <nav>
     <i class="fa-solid fa-ticket fa-2x"></i>
     <a 
+			href="/meals/new"
+			<%- title === 'Add Meal' ? 'class="active"' : '' %>
+		>
+			ADD MEAL
+		</a>
+    <a 
       href="/flights/new" <%- title === 'Add Flights' ? 'class="active"' : '' %>
     >ADD FLIGHTS</a>
     <a 
